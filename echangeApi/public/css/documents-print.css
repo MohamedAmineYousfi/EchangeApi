@@ -1,0 +1,9 @@
+@font-face {
+    font-family: Tahoma-Bold_s;
+    src: url("../fonts/Tahoma-Bold_s.woff") format("woff");
+}
+
+@font-face {
+    font-family: Tahoma_w;
+    src: url("../fonts/Tahoma_w.woff") format("woff");
+}

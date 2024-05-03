@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Constants;
+
+class AuctionInformation
+{
+    public const AUCTION_TYPE_STANDARD = 'STANDARD';
+
+    public const AUCTION_TYPE_SILENT = 'SILENT';
+
+    const AUCTION_TYPES = [self::AUCTION_TYPE_STANDARD, self::AUCTION_TYPE_SILENT];
+
+    public const OBJECT_TYPE_PROPERTY = 'PROPERTY';
+
+    public const OBJECT_TYPE_CAR = 'CAR';
+
+    const OBJECT_TYPES = [self::OBJECT_TYPE_PROPERTY, self::OBJECT_TYPE_CAR];
+
+    public const PAYMENT_SOURCE_BANK_DRAFT = 'BANK_DRAFT';
+
+    public const PAYMENT_SOURCE_CERTIFIED_CHECK = 'CERTIFIED_CHECK';
+
+    public const PAYMENT_SOURCE_NORMAL_CHECK = 'NORMAL_CHECK';
+
+    public const PAYMENT_SOURCE_FIDEOCOMMIS_CHECK = 'FIDEOCOMMIS_CHECK';
+
+    public const PAYMENT_SOURCE_BANK_TRANSFER = 'BANK_TRANSFER';
+
+    public const PAYMENT_SOURCE_POST_ORDER = 'POST_ORDER';
+
+    public const PAYMENT_SOURCE_CASH = 'CASH';
+
+    const AUCTION_PAYMENTS = [
+        self::PAYMENT_SOURCE_CASH,
+        self::PAYMENT_SOURCE_BANK_DRAFT,
+        self::PAYMENT_SOURCE_CERTIFIED_CHECK,
+        self::PAYMENT_SOURCE_FIDEOCOMMIS_CHECK,
+        self::PAYMENT_SOURCE_NORMAL_CHECK,
+        self::PAYMENT_SOURCE_BANK_TRANSFER,
+        self::PAYMENT_SOURCE_POST_ORDER];
+}

@@ -1,0 +1,17 @@
+image: webo3/rsync
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Build and deploy to staging
+          deployment: staging
+          script:
+            - bash bitbucket-deploy.sh
+
+    main:
+      - step:
+          name: Build and deploy to production
+          deployment: production
+          script:
+            - bash bitbucket-deploy.sh

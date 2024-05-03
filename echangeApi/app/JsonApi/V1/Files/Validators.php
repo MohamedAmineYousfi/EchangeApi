@@ -1,0 +1,109 @@
+<?php
+
+namespace App\JsonApi\V1\Files;
+
+use App\Rules\AllowedLocations;
+use CloudCreativity\LaravelJsonApi\Rules\HasMany;
+use CloudCreativity\LaravelJsonApi\Rules\HasOne;
+use CloudCreativity\LaravelJsonApi\Validation\AbstractValidators;
+
+class Validators extends AbstractValidators
+{
+    /**
+     * The include paths a client is allowed to request.
+     *
+     * @var string[]|null
+     *                    the allowed paths, an empty array for none allowed, or null to allow all paths.
+     */
+    protected $allowedIncludePaths = [
+        'organization',
+        'object',
+        'tags',
+        'allowedLocations',
+        'users',
+        'roles',
+        'folder',
+        'owner',
+    ];
+
+    /**
+     * The sort field names a client is allowed send.
+     *
+     * @var string[]|null
+     *                    the allowed fields, an empty array for none allowed, or null to allow all fields.
+     */
+    protected $allowedSortParameters = [
+        'name',
+        'size',
+        'created_at',
+    ];
+
+    /**
+     * The filters a client is allowed send.
+     *
+     * @var string[]|null
+     *                    the allowed filters, an empty array for none allowed, or null to allow all.
+     */
+    protected $allowedFilteringParameters = [
+        'name',
+        'size',
+        'url',
+        'path',
+        'excerpt',
+        'search',
+        'id',
+        'tags',
+        'objectType',
+        'objectId',
+        'allowedLocations',
+        'organization',
+    ];
+
+    /**
+     * Get resource validation rules.
+     *
+     * @param  mixed|null  $record
+     *                              the record being updated, or null if creating a resource.
+     * @param  array  $data
+     *                       the data being validated
+     */
+    protected function rules($record, array $data): array
+    {
+        $ressources = array_keys(config()->get('json-api-v1.resources'));
+
+        return [
+            'name' => ['required', 'string'],
+            'path' => ['required', 'string'],
+            'excerpt' => ['nullable', 'string'],
+            'object' => [
+                new HasOne(...$ressources),
+            ],
+            'folder' => [
+                new HasOne('folders'),
+            ],
+            'organization' => [
+                'required',
+                new HasOne('organizations'),
+            ],
+            'tags' => [new HasMany('tags')],
+            'allowedLocations' => [
+                new AllowedLocations(),
+                new HasMany('locations'),
+            ],
+        ];
+    }
+
+    /**
+     * Get query parameter validation rules.
+     */
+    protected function queryRules(): array
+    {
+        return [
+            'filter.created_at' => 'array|min:2',
+            'filter.created_at.*' => 'filled|date_format:Y-m-d H:i:s',
+            'filter.organization' => 'string',
+            'filter.search' => 'string',
+            'filter.id' => 'string',
+        ];
+    }
+}
